@@ -1,0 +1,17 @@
+-- AlterTable
+ALTER TABLE `blogs` ADD COLUMN `isBreaking` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `isFeatured` BOOLEAN NOT NULL DEFAULT false;
+
+-- CreateTable
+CREATE TABLE `contact` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firstName` VARCHAR(50) NOT NULL,
+    `lastName` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(13) NOT NULL,
+    `mobile` VARCHAR(13) NOT NULL,
+    `message` VARCHAR(50) NOT NULL,
+    `createAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updateAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

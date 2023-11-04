@@ -1,0 +1,12 @@
+-- AlterTable
+ALTER TABLE `contact` MODIFY `message` VARCHAR(100) NOT NULL;
+
+-- CreateTable
+CREATE TABLE `subscriber` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(100) NOT NULL,
+    `createAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updateAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id        Int         @id @default(autoincrement())
+  firstName String      @db.VarChar(50)
+  lastName  String      @db.VarChar(50)
+  email     String      @unique @db.VarChar(50)
+  password  String      @db.VarChar(50)
+  createAt  DateTime    @default(now()) @db.Timestamp(0)
+  updateAt  DateTime    @default(now()) @updatedAt @db.Timestamp(0)
+  category  categorys[]
+  service   services[]
+  blogs     blogs[]
+}
+
+model services {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique @db.VarChar(50)
+  slug      String   @unique @db.VarChar(50)
+  shortDesc String   @db.LongText
+  longDesc  String   @db.LongText
+  imgCDN    String   @db.VarChar(300)
+  user_id   Int      @db.Int
+  createAt  DateTime @default(now()) @db.Timestamp(0)
+  updateAt  DateTime @default(now()) @updatedAt @db.Timestamp(0)
+  users     users    @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model categorys {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique @db.VarChar(50)
+  slug      String   @unique @db.VarChar(50)
+  imgCDN    String   @db.VarChar(300)
+  shortDesc String   @db.LongText
+  longDesc  String   @db.LongText
+  user_id   Int      @db.Int
+  createAt  DateTime @default(now()) @db.Timestamp(0)
+  updateAt  DateTime @default(now()) @updatedAt @db.Timestamp(0)
+  users     users    @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  blogs     blogs[]
+}
+
+model blogs {
+  id          Int       @id @default(autoincrement())
+  title       String    @unique @db.VarChar(100)
+  slug        String    @unique @db.VarChar(100)
+  imgCDN      String    @db.VarChar(300)
+  imgCDN2     String    @db.VarChar(300)
+  imgCDN3     String    @db.VarChar(300)
+  imgCDN4     String    @db.VarChar(300)
+  imgCDN5     String    @db.VarChar(300)
+  shortDesc   String    @db.LongText
+  longDesc    String    @db.LongText
+  user_id     Int       @db.Int
+  category_id Int       @db.Int
+  isFeatured  Boolean   @default(false)
+  isBreaking  Boolean   @default(false)
+  createAt    DateTime  @default(now()) @db.Timestamp(0)
+  updateAt    DateTime  @default(now()) @updatedAt @db.Timestamp(0)
+  users       users     @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  categorys   categorys @relation(fields: [category_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model setting {
+  id         Int      @id @default(autoincrement())
+  siteName   String   @db.VarChar(50)
+  logo       String   @db.VarChar(100)
+  mobileOne  String   @db.VarChar(13)
+  mobileTwo  String   @db.VarChar(13)
+  emailOne   String   @db.VarChar(50)
+  emailTwo   String   @db.VarChar(50)
+  addressOne String   @db.VarChar(100)
+  addressTwo String   @db.VarChar(100)
+  map        String   @db.VarChar(300)
+  createAt   DateTime @default(now()) @db.Timestamp(0)
+  updateAt   DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model contact {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(50)
+  lastName  String   @db.VarChar(50)
+  email     String   @db.VarChar(100)
+  mobile    String   @db.VarChar(13)
+  message   String   @db.VarChar(100)
+  createAt  DateTime @default(now()) @db.Timestamp(0)
+  updateAt  DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model subscriber {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique @db.VarChar(100)
+  createAt DateTime @default(now()) @db.Timestamp(0)
+  updateAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
